@@ -1,0 +1,49 @@
+@use "../../partials/mixins" as *;
+
+.piano {
+    display: flex;
+
+    &__note {
+        border: 1px solid black;
+
+        &:hover {
+            background-color: lightgrey;
+        }
+        &:active {
+            background-color: yellow;
+        }
+
+        &--white {
+            background-color: white;
+            width: 3rem;
+            height: 11rem;
+
+            color: red;
+            text-align: center;
+            margin: -2px;
+
+            @include tablet {
+                width: 6rem;
+                height: 22rem;
+            }
+        }
+        &--black {
+            background-color: black;
+            width: 2rem;
+            height: 6rem;
+            margin-left: -1rem;
+            margin-right: -1rem;
+
+            z-index: 1;
+            color: red;
+            text-align: center;
+
+            @include tablet {
+                width: 4rem;
+                height: 12rem;
+                margin-left: -2rem;
+                margin-right: -2rem;
+            }
+        }
+    }
+}
