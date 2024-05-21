@@ -6,15 +6,29 @@ import { useState } from "react"
 
 const Piano = () => {
 
-    const [selectedSynth, setSelectedSynth] = useState('synth')
+    type Synths = {
+        synth: Tone.Synth;
+        duoSynth: Tone.DuoSynth;
+        amSynth: Tone.AMSynth;
+        fmSynth: Tone.FMSynth;
+        membraneSynth: Tone.MembraneSynth;
+        pluckySynth: Tone.PluckSynth;
+        monoSynth: Tone.MonoSynth;
+        casio: Tone.Sampler;
 
-    const synths = {
+    }
+
+    //using union type to select the key of the object for use in the map in the return statement
+    type SynthNames = keyof Synths;
+
+    const [selectedSynth, setSelectedSynth] = useState<SynthNames>('synth')
+
+    const synths: Synths = {
         synth: new Tone.Synth().toDestination(),
         duoSynth: new Tone.DuoSynth().toDestination(),
         amSynth: new Tone.AMSynth().toDestination(),
         fmSynth: new Tone.FMSynth().toDestination(),
         membraneSynth: new Tone.MembraneSynth().toDestination(),
-        /* noiseSynth: new Tone.NoiseSynth().toDestination(), */
         pluckySynth: new Tone.PluckSynth().toDestination(),
         monoSynth: new Tone.MonoSynth({
             oscillator: {
@@ -33,6 +47,10 @@ const Piano = () => {
         }).toDestination(),
     };
 
+    //Why this instead?
+    /*   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+          setSelectedSynth(event.target.value as SynthNames);
+      }; */
     const handleChange = (event: any) => {
         setSelectedSynth(event.target.value)
     }
@@ -52,15 +70,11 @@ const Piano = () => {
         <>
             <div>
                 <select onChange={handleChange}>
-                    <option value="synth">Synth</option>
-                    <option value="duoSynth">DuoSynth</option>
-                    <option value="amSynth">AM Synth</option>
-                    <option value="fmSynth">FM Synth</option>
-                    <option value="membraneSynth">Membrane Synth</option>
-                    {/* <option value="noiseSynth">Noise Synth</option> */}
-                    <option value="pluckySynth">Plucky Synth</option>
-                    <option value="monoSynth">Mono Synth</option>
-                    <option value="casio">Casio</option>
+                    {Object.keys(synths).map((synth) => (
+                        <option key={synth} value={synth}>
+                            {synth}
+                        </option>
+                    ))}
 
                 </select>
             </div>
