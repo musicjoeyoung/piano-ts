@@ -47,13 +47,11 @@ const Piano = () => {
         }).toDestination(),
     };
 
-    //Why this instead?
-    /*   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-          setSelectedSynth(event.target.value as SynthNames);
-      }; */
-    const handleChange = (event: any) => {
-        setSelectedSynth(event.target.value)
-    }
+
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedSynth(event.target.value as SynthNames);
+    };
+
 
     const playNote = (note: string, duration: string) => {
         const synth = synths[selectedSynth];
