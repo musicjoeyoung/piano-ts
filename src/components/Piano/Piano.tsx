@@ -1,7 +1,7 @@
 import './Piano.scss'
 import * as Tone from "tone"
 import notes from '../../assets/notes/notes'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
 const Piano = () => {
@@ -22,9 +22,10 @@ const Piano = () => {
     type SynthNames = keyof Synths;
 
     const [selectedSynth, setSelectedSynth] = useState<SynthNames>('synth')
+    const [activeKey, setActiveKey] = useState<string | null>(null)
 
     const synths: Synths = {
-        synth: new Tone.Synth().toDestination(),
+        synth: new Tone.Synth(/* { envelope: { decay: 1 } } */).toDestination(),
         duoSynth: new Tone.DuoSynth().toDestination(),
         amSynth: new Tone.AMSynth().toDestination(),
         fmSynth: new Tone.FMSynth().toDestination(),
@@ -38,6 +39,7 @@ const Piano = () => {
                 attack: 0.1,
             },
         }).toDestination(),
+        //casio not working properly
         casio: new Tone.Sampler({
             urls: {
                 A1: 'A1.mp3',
@@ -62,6 +64,28 @@ const Piano = () => {
         }
     };
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+        const note = notes.find((note) => note.key === event.key);
+        if (note) {
+            playNote(note.note, note.duration);
+            setActiveKey(note.key);
+        }
+    }
+    const handleKeyUp = (event: KeyboardEvent) => {
+        if (activeKey === event.key) {
+            setActiveKey(null);
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
+        }
+    }, [selectedSynth, activeKey])
+
 
 
     return (
@@ -78,7 +102,7 @@ const Piano = () => {
             </div>
             <div className='piano'>
                 {notes.map((note, index) => (
-                    <div key={index} onClick={() => playNote(note.note, note.duration)} className={`piano__note ${note.color === 'white' ? 'piano__note--white' : 'piano__note--black'}`}>
+                    <div key={index} onClick={() => playNote(note.note, note.duration)} className={`piano__note ${note.color === 'white' ? 'piano__note--white' : 'piano__note--black'} ${activeKey === note.key ? 'piano__note--active' : ''}`}>
                         {note.note}
                     </div>
 
