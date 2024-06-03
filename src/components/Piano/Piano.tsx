@@ -2,6 +2,7 @@ import './Piano.scss'
 import * as Tone from "tone"
 import notes from '../../assets/notes/notes'
 import { useState, useEffect, useRef } from "react"
+import keyboardImg from "../../assets/images/keyboard-tonejs.jpeg"
 
 const Piano = () => {
     type Synths = {
@@ -123,15 +124,15 @@ const Piano = () => {
 
     return (
         <>
-            <div>
-                <select onChange={handleChange}>
-                    {isSynthInitialized && Object.keys(synthRef.current ?? {}).map((synth) => (
-                        <option key={synth} value={synth}>
-                            {synth}
-                        </option>
-                    ))}
-                </select>
-            </div>
+
+            <select onChange={handleChange}>
+                {isSynthInitialized && Object.keys(synthRef.current ?? {}).map((synth) => (
+                    <option key={synth} value={synth}>
+                        {synth}
+                    </option>
+                ))}
+            </select>
+
             <div className='piano'>
                 {notes.map((note, index) => (
                     <div key={index} onClick={() => playNote(note.note, note.duration)} className={`piano__note ${note.color === 'white' ? 'piano__note--white' : 'piano__note--black'} ${activeKey === note.key ? 'piano__note--active' : ''}`}>
@@ -139,6 +140,7 @@ const Piano = () => {
                     </div>
                 ))}
             </div>
+            <img src={keyboardImg} alt="keyboard keys for piano" className="keyboard" />
         </>
     )
 }

@@ -2,6 +2,7 @@
 
 .piano {
     display: flex;
+    justify-content: center;
 
     &__note {
         border: 1px solid black;
@@ -51,4 +52,16 @@
             background-color: yellow;
         }
     }
+}
+
+.keyboard {
+    width: 40%;
+    margin: 4rem 0 0 0;
+}
+
+select {
+    margin: 0 0 1rem 0;
+    width: 30%;
+    padding: 0.3rem;
+    border-radius: 7px;
 }
