@@ -17,10 +17,12 @@
             background-color: white;
             width: 3rem;
             height: 11rem;
-
             color: red;
             text-align: center;
             margin: -2px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
 
             @include tablet {
                 width: 6rem;
