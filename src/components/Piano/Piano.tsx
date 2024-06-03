@@ -14,7 +14,8 @@ const Piano = () => {
         membraneSynth: Tone.MembraneSynth;
         pluckySynth: Tone.PluckSynth;
         monoSynth: Tone.MonoSynth;
-        casio: Tone.Sampler;
+        polySynth: Tone.PolySynth;
+        //casio: Tone.Sampler;
 
     }
 
@@ -25,7 +26,7 @@ const Piano = () => {
     const [activeKey, setActiveKey] = useState<string | null>(null)
 
     const synths: Synths = {
-        synth: new Tone.Synth(/* { envelope: { decay: 1 } } */).toDestination(),
+        synth: new Tone.Synth(/* { envelope: { decay: 0.1 } } */).toDestination(),
         duoSynth: new Tone.DuoSynth().toDestination(),
         amSynth: new Tone.AMSynth().toDestination(),
         fmSynth: new Tone.FMSynth().toDestination(),
@@ -39,14 +40,15 @@ const Piano = () => {
                 attack: 0.1,
             },
         }).toDestination(),
+        polySynth: new Tone.PolySynth().toDestination(),
         //casio not working properly
-        casio: new Tone.Sampler({
-            urls: {
-                A1: 'A1.mp3',
-                A2: 'A2.mp3',
-            },
-            baseUrl: 'https://tonejs.github.io/audio/casio/',
-        }).toDestination(),
+        /*        casio: new Tone.Sampler({
+                   urls: {
+                       A1: 'A1.mp3',
+                       A2: 'A2.mp3',
+                   },
+                   baseUrl: 'https://tonejs.github.io/audio/casio/',
+               }).toDestination(), */
     };
 
 
